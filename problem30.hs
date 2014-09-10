@@ -14,3 +14,5 @@ nines n | n > 0 = 10 ^ n - 1
 limit = head $ filter (\n -> n > sum5thPower n) (map nines [1..])
 
 answer = sum $ filter (\n -> n == sum5thPower n) [2..limit]
+
+main = print answer

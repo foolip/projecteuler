@@ -11,3 +11,5 @@ isPrime n
   where limit = 1 + (floor $ sqrt $ fromIntegral n)
 
 answer = sum $ filter isPrime [2..2000000]
+
+main = print answer

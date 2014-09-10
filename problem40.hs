@@ -12,3 +12,5 @@ d n = c10 !! (n - 1)
 ns = map (10^) [0..6]
 
 answer = product $ map d ns
+
+main = print answer

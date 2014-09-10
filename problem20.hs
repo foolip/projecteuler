@@ -7,3 +7,5 @@ digitSum 0 = 0
 digitSum n = (mod n 10) + digitSum (div n 10)
 
 answer = digitSum $ factorial 100
+
+main = print answer
