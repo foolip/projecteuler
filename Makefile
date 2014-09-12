@@ -7,4 +7,4 @@ all : $(TARGETS)
 	ghc $< -o $@
 
 problem10.cc.bin : problem10.cc prime.h
-	clang++ --std=c++11 -Weverything $< -o $@
+	clang++ --std=c++11 -Weverything -fno-exceptions -fno-rtti $< -o $@
