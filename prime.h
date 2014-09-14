@@ -36,18 +36,20 @@ class PrimesTrialDivision {
 };
 
 template <typename Int>
-class Multiple {
- public:
-  explicit Multiple(Int prime) : value_(prime * prime), step_(2 * prime) {}
+class Marked {
+  Marked(Int value, Int step) : value_(value), step_(step) {}
 
-  bool operator<(const Multiple& other) const {
+ public:
+  explicit Marked(Int prime) : value_(prime * prime), step_(2 * prime) {}
+
+  bool operator<(const Marked& other) const {
     // > instead of < so that the priority_queue is reversed
     return value_ > other.value_;
   }
 
   Int value() const { return value_; }
 
-  void next() { value_ += step_; }
+  Marked next() const { return Marked(value_ + step_, step_); }
 
  private:
   Int value_;
@@ -58,38 +60,48 @@ template <typename Int>
 class PrimesEratosthenes {
  public:
   PrimesEratosthenes() : current_(3) {
-    multiples_.emplace(3);
+    active_marked_.emplace(3);
   }
 
   Int current() const { return current_; }
 
   void next() {
+    Int n = current_;
+
     for (;;) {
-      current_ += 2;
-      const Int smallest_multiple = multiples_.top().value();
-      if (current_ == smallest_multiple) {
-        // current_ is composite
-        assert(!isPrime(current_));
+      n += 2;
+
+      assert(n <= active_marked_.top().value());
+      assert(pending_marked_.empty() || n <= pending_marked_.front().value());
+
+      if (active_marked_.top().value() == n) {
+        // n is composite
+        assert(!isPrime(n));
         do {
-          Multiple<Int> multiple = multiples_.top();
-          multiples_.pop();
-          multiple.next();
-          multiples_.emplace(multiple);
-        } while (multiples_.top().value() == smallest_multiple);
-        continue;
+          active_marked_.push(active_marked_.top().next());
+          active_marked_.pop();
+        } while (active_marked_.top().value() == n);
+      } else if (!pending_marked_.empty() &&
+                 pending_marked_.front().value() == n) {
+        // n is composite
+        assert(!isPrime(n));
+        active_marked_.push(pending_marked_.front().next());
+        pending_marked_.pop();
       } else {
-        assert(current_ < smallest_multiple);
-        // current_ is prime
-        assert(isPrime(current_));
-        multiples_.emplace(current_);
+        // n is prime
+        assert(isPrime(n));
+        pending_marked_.emplace(n);
         break;
       }
     }
+
+    current_ = n;
   }
 
  private:
   Int current_;
-  std::priority_queue<Multiple<Int>> multiples_;
+  std::priority_queue<Marked<Int>> active_marked_;
+  std::queue<Marked<Int>> pending_marked_;
 };
 
 #endif  // PRIME_H_
