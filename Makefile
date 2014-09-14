@@ -6,5 +6,10 @@ all : $(TARGETS)
 %.hs.bin : %.hs Prime.hs
 	ghc $< -o $@
 
+CLANG_WARN_FLAGS=-Weverything -Wno-c++98-compat -Wno-padded
+CLANG_DEBUG_FLAGS=-g -O0
+CLANG_RELEASE_FLAGS=-DNDEBUG -O3
+CLANG_FLAGS=--std=c++11 -fno-exceptions -fno-rtti $(CLANG_WARN_FLAGS) $(CLANG_RELEASE_FLAGS)
+
 problem10.cc.bin : problem10.cc prime.h
-	clang++ --std=c++11 -Weverything -fno-exceptions -fno-rtti $< -o $@
+	clang++ $(CLANG_FLAGS) $< -o $@
