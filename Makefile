@@ -11,5 +11,5 @@ CLANG_DEBUG_FLAGS=-g -O0
 CLANG_RELEASE_FLAGS=-DNDEBUG -O3
 CLANG_FLAGS=--std=c++11 -fno-exceptions -fno-rtti $(CLANG_WARN_FLAGS) $(CLANG_RELEASE_FLAGS)
 
-problem10.cc.bin : problem10.cc prime.h
+%.cc.bin : %.cc prime.h
 	clang++ $(CLANG_FLAGS) $< -o $@
