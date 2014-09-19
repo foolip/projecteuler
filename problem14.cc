@@ -1,61 +1,74 @@
 #include <assert.h>
 #include <iostream>
-#include <map>
+#include <vector>
 
 class Collatz {
  public:
-  Collatz();
+  explicit Collatz(size_t cache_limit);
 
   // Returns the number in the Collatz sequence after n.
-  int64_t next(int64_t n) const;
+  uint64_t next(uint64_t n) const;
 
   // Returns the length of the Collatz sequence starting at n.
-  int64_t length(int64_t n) const;
+  uint64_t length(uint64_t n) const;
 
  private:
-  mutable std::map<int64_t, int64_t> length_cache_;
+  mutable std::vector<uint64_t> cache_;
 };
 
-Collatz::Collatz() {
-  length_cache_.emplace(1, 1);
+Collatz::Collatz(size_t cache_limit) {
+  assert(cache_limit > 1);
+  cache_.resize(cache_limit, 0);
+  cache_[1] = 1;
 }
 
-int64_t Collatz::next(int64_t n) const {
+uint64_t Collatz::next(uint64_t n) const {
   assert(n > 0);
 
-  int64_t m;
-  if (n % 2 == 0)
+  uint64_t m;
+  if (n % 2 == 0) {
     m = n / 2;
-  else
+  } else {
     m = 3 * n + 1;
+    // overflow check
+    assert((m - 1) / 3 == n);
+  }
 
   assert(m > 0);
   return m;
 }
 
-int64_t Collatz::length(int64_t n) const {
+uint64_t Collatz::length(uint64_t n) const {
   assert(n > 0);
 
-  auto cached = length_cache_.find(n);
-  if (cached != length_cache_.end())
-    return cached->second;
+  const bool use_cache = n < cache_.size();
 
-  int64_t length_n = 1 + length(next(n));
+  if (use_cache) {
+    uint64_t cached = cache_[n];
+    if (cached)
+      return cached;
+  }
+
+  uint64_t length_n = 1 + length(next(n));
   assert(length_n > 0);
 
-  length_cache_[n] = length_n;
-  assert(length(n) == length_n);
+  if (use_cache) {
+    cache_[n] = length_n;
+    assert(length(n) == length_n);
+  }
 
   return length_n;
 }
 
 int main() {
-  Collatz collatz;
+  const size_t kLimit = 1000000;
 
-  int64_t max_length = 0;
-  int64_t n_with_max_length = 0;
-  for (int64_t n = 1; n < 1000000; ++n) {
-    int64_t length = collatz.length(n);
+  Collatz collatz(kLimit);
+
+  uint64_t max_length = 0;
+  uint64_t n_with_max_length = 0;
+  for (uint64_t n = 1; n < kLimit; ++n) {
+    uint64_t length = collatz.length(n);
     if (length > max_length) {
       max_length = length;
       n_with_max_length = n;
