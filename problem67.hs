@@ -1,5 +1,3 @@
-import System.IO
-
 -- Split string by newlines and spaces
 toTriangle :: String -> [[Int]]
 toTriangle s = map (map read . words) (lines s)
