@@ -1,5 +1,8 @@
 #include <assert.h>
+#include <future>
 #include <iostream>
+#include <thread>
+#include <vector>
 
 namespace {
 
@@ -40,7 +43,18 @@ int count_arrives_at_89(int begin, int step, int end) {
 int main() {
   const int kLimit = 10000000;
 
-  int answer = count_arrives_at_89(1, 1, kLimit);
+  unsigned threads = std::thread::hardware_concurrency();
+  assert(threads > 0);
+
+  std::vector<std::future<int>> futures;
+  for (int i = 1; i <= static_cast<int>(threads); ++i) {
+    futures.push_back(std::async(std::launch::async, count_arrives_at_89, i, threads, kLimit));
+  }
+
+  int answer = 0;
+  for (std::future<int>& f : futures) {
+    answer += f.get();
+  }
 
   std::cout << answer << std::endl;
 
