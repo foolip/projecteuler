@@ -1,4 +1,4 @@
-SOURCES=$(wildcard problem*.hs)
+SOURCES=$(wildcard p???.hs)
 TARGETS=$(patsubst %.hs, %.hs.bin, $(SOURCES))
 
 all : $(TARGETS)

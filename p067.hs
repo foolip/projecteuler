@@ -11,7 +11,7 @@ maxPairs row = zipWith max row (tail row)
 maxPath top bottom = zipWith (+) top (maxPairs bottom)
 
 main = do
-  input <- readFile "problem67.txt"
+  input <- readFile "p067_triangle.txt"
   let triangle = toTriangle input
       answer = head $ foldr1 maxPath triangle
   print answer
