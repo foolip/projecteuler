@@ -3,7 +3,7 @@ TARGETS=$(patsubst %.hs, %.hs.bin, $(SOURCES))
 
 all : $(TARGETS)
 
-%.hs.bin : %.hs Prime.hs
+%.hs.bin : %.hs
 	ghc $< -o $@
 
 CLANG_WARN_FLAGS=-Weverything -Wno-c++98-compat -Wno-padded

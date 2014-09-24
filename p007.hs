@@ -1,7 +1,5 @@
-import Prime
+import Data.Numbers.Primes
 
-primeAt n = (filter isPrime [2..]) !! (n - 1)
-
-answer = primeAt 10001
+answer = primes !! 10000
 
 main = print answer

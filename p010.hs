@@ -1,5 +1,5 @@
-import Prime
+import Data.Numbers.Primes
 
-answer = sum $ filter isPrime [2..2000000]
+answer = sum $ takeWhile (<2000000) primes
 
 main = print answer
