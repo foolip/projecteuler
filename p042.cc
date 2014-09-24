@@ -1,16 +1,11 @@
-#undef NDEBUG
 #include <assert.h>
 #include <math.h>
+#include <fstream>
 #include <iostream>
 #include <limits>
 #include <string>
 
 namespace {
-
-uint64_t TriangleNumber(uint64_t n) {
-  assert(n > 0);
-  return (n * (n + 1)) / 2;
-}
 
 bool IsTriangleNumber(uint32_t x) {
   // x = (n * (n + 1)) / 2 => n = (sqrt(8*x + 1) - 1) / 2, so x is a triangle
@@ -36,6 +31,11 @@ bool IsTriangleWord(std::string word) {
 }
 
 #ifndef NDEBUG
+
+uint64_t TriangleNumber(uint64_t n) {
+  assert(n > 0);
+  return (n * (n + 1)) / 2;
+}
 
 bool TestTriangleNumber() {
   assert(TriangleNumber(1) == 1);
@@ -97,9 +97,31 @@ bool TestAll() {
 
 #endif
 
+size_t CountTriangleWords(const char* filename) {
+  std::ifstream file(filename);
+  size_t count = 0;
+  std::string word;
+  char c;
+
+  while (file.get(c).good()) {
+    if ('A' <= c && c <= 'Z') {
+      word += c;
+    } else if (!word.empty()) {
+      if (IsTriangleWord(word))
+        count++;
+      word.clear();
+    }
+  }
+
+  return count;
+}
+
 }  // namespace
 
 int main() {
   assert(TestAll());
+
+  std::cout << CountTriangleWords("p042_words.txt") << std::endl;
+
   return 0;
 }
