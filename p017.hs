@@ -41,3 +41,5 @@ letters :: String -> Int
 letters = length . filter isLetter
 
 answer = sum $ map (letters . format) [1..1000]
+
+main = print answer
