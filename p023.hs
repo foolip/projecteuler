@@ -19,11 +19,11 @@ sums :: Integral a => [a] -> a -> [a]
 sums terms limit = concatMap sums2 (tails terms)
   where
     sums2 [] = []
-    sums2 (x:xs) = takeWhile (<=limit) (map (x+) xs)
+    sums2 xs = takeWhile (<=limit) (map ((head xs)+) xs)
 
 abundantSums :: Integral a => [a]
 abundantSums = sums abundants 28123
 
-answer = length $ nub $ sort $ abundantSums
+answer = (sum [1..28123]) - (sum . nub . sort $ abundantSums)
 
 main = print answer
