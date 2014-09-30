@@ -6,6 +6,7 @@
 countSolutions :: Integral a => [a] -> a -> a
 countSolutions [] 0 = 1
 countSolutions [] sum = 0
+countSolutions (1:[]) sum = 1
 countSolutions (t:ts) sum' = sum solutions
   where
     subSums = [0,t..sum']
