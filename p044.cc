@@ -28,25 +28,37 @@ T MatchingPentagonalPairDifference() {
   };
 
   // The difference between p(k) and p(j) will be a pentagonal number, so find
-  // for and test pairs where the difference is a pentagonal number.
+  // and test pairs where the difference is a pentagonal number.
   for (T n = 1; n < std::numeric_limits<T>::max(); ++n) {
     const T diff = p(n);
-    // FIXME: Increment j and k with finesse so that the diff_k_j alternates
-    // around diff until either it matches or j==k.
-    for (T j = 1; ; ++j) {
-      if (p(j + 1) - p(j) > diff)
-        break;
-      for (T k = j + 1; ; ++k) {
-        const T diff_k_j = p(k) - p(j);
-        assert(diff_k_j > 0);
-        if (diff_k_j == diff) {
-          const T sum_k_j = p(k) + p(j);
-          if (IsPentagonal(sum_k_j))
-            return diff;
-        } else if (diff_k_j > diff) {
-          break;
-        }
+
+    // Increment either j or k so that the diff_k_j alternates around diff until
+    // either it matches or j==k.
+    T j = 1;
+    T k = n + 1;
+    for (;;) {
+      assert(j < k);
+      const T diff_k_j = p(k) - p(j);
+      assert(diff_k_j > 0);
+
+      if (diff_k_j == diff) {
+        const T sum_k_j = p(k) + p(j);
+        if (IsPentagonal(sum_k_j))
+          return diff;
+        j++;
+        k++;
+        continue;
       }
+
+      if (diff_k_j < diff) {
+        k++;
+        continue;
+      }
+
+      assert(diff_k_j > diff);
+      j++;
+      if (j == k)
+        break;
     }
   }
 
