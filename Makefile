@@ -4,7 +4,7 @@ all: clang_debug clang_release ghc_release
 
 CC_SOURCES=$(wildcard p???.cc)
 
-CLANG_FLAGS=-std=c++11 -pthread -fno-exceptions -fno-rtti
+CLANG_FLAGS=-std=c++1y -pthread -fno-exceptions -fno-rtti
 CLANG_WARN_FLAGS=-Weverything -Wno-c++98-compat -Wno-padded
 CLANG_DEBUG_FLAGS=$(CLANG_FLAGS) $(CLANG_WARN_FLAGS) -g -O0
 CLANG_RELEASE_FLAGS=$(CLANG_FLAGS) $(CLANG_WARN_FLAGS) -DNDEBUG -O3
