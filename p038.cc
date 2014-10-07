@@ -26,23 +26,19 @@ int FromDigits(T begin, T end) {
 }
 
 bool IsConcatenatedProduct(const std::vector<int>& digits,
-                           std::vector<int>& scratch,
-                           size_t num_digits) {
+                           std::vector<int>& scratch, size_t num_digits) {
   assert(digits.size());
   assert(num_digits <= digits.size());
 
   const int multiplicand = FromDigits(&digits[0], &digits[num_digits]);
   size_t matched_digits = num_digits;
-  for (int product = multiplicand * 2; ; product += multiplicand) {
+  for (int product = multiplicand * 2;; product += multiplicand) {
     ToDigits(product, scratch);
     for (int next_digit : scratch) {
-      if (next_digit != digits[matched_digits])
-        return false;
+      if (next_digit != digits[matched_digits]) return false;
       matched_digits++;
-      if (matched_digits == digits.size())
-        return true;
-      if (matched_digits > digits.size())
-        return false;
+      if (matched_digits == digits.size()) return true;
+      if (matched_digits > digits.size()) return false;
     }
   }
   assert(false);
@@ -53,14 +49,13 @@ bool IsConcatenatedProduct(const std::vector<int>& digits,
   assert(digits.size());
 
   for (size_t num_digits = 1; num_digits <= digits.size() / 2; ++num_digits) {
-    if (IsConcatenatedProduct(digits, scratch, num_digits))
-      return true;
+    if (IsConcatenatedProduct(digits, scratch, num_digits)) return true;
   }
   return false;
 }
 
 int LargestPandigitalConcatenatedProduct(std::vector<int>& scratch) {
-  std::vector<int> digits { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+  std::vector<int> digits{9, 8, 7, 6, 5, 4, 3, 2, 1};
   do {
     if (IsConcatenatedProduct(digits, scratch))
       return FromDigits(digits.begin(), digits.end());

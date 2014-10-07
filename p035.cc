@@ -11,8 +11,8 @@ std::vector<bool> is_prime_to(size_t limit) {
   std::vector<bool> result;
   result.resize(limit, false);
   result[2] = true;
-  for (PrimesEratosthenes<size_t> primes;
-       primes.current() < limit; primes.next()) {
+  for (PrimesEratosthenes<size_t> primes; primes.current() < limit;
+       primes.next()) {
     result[primes.current()] = true;
   }
   return result;
@@ -36,9 +36,7 @@ size_t pow10(size_t n) {
   return p;
 }
 
-size_t rotate(size_t n, size_t p) {
-  return p * (n % 10) + (n / 10);
-}
+size_t rotate(size_t n, size_t p) { return p * (n % 10) + (n / 10); }
 
 }  // namespace
 
@@ -61,8 +59,7 @@ int main() {
           break;
         }
       }
-      if (all_rotations_are_prime)
-        answer++;
+      if (all_rotations_are_prime) answer++;
     }
   }
 

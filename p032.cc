@@ -19,18 +19,19 @@
 namespace {
 
 int SumOfProducts() {
-  auto products = std::unordered_set<int> { };
+  auto products = std::unordered_set<int>{};
 
-  auto digits = std::vector<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  auto digits = std::vector<int>{1, 2, 3, 4, 5, 6, 7, 8, 9};
   do {
     auto multiplicand_1 = digits[0];
-    auto multiplier_4 = digits[1] + 10*digits[2] + 100*digits[3] +
-      1000*digits[4];
+    auto multiplier_4 =
+        digits[1] + 10 * digits[2] + 100 * digits[3] + 1000 * digits[4];
 
-    auto multiplicand_2 = digits[0] + 10*digits[1];
-    auto multiplier_3 = digits[2] + 10*digits[3] + 100*digits[4];
+    auto multiplicand_2 = digits[0] + 10 * digits[1];
+    auto multiplier_3 = digits[2] + 10 * digits[3] + 100 * digits[4];
 
-    auto product = digits[5] + 10*digits[6] + 100*digits[7] + 1000*digits[8];
+    auto product =
+        digits[5] + 10 * digits[6] + 100 * digits[7] + 1000 * digits[8];
 
     if (multiplicand_1 * multiplier_4 == product ||
         multiplicand_2 * multiplier_3 == product)

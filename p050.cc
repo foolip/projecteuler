@@ -25,8 +25,7 @@ size_t max_sequence_length(const std::vector<uint64_t>& primes) {
   uint64_t sum = 0;
   for (uint64_t prime : primes) {
     sum += prime;
-    if (sum > max_prime)
-      return length;
+    if (sum > max_prime) return length;
     length++;
   }
   assert(false);

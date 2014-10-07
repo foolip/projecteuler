@@ -21,8 +21,7 @@ int square_of_digits(int n) {
 }
 
 bool arrives_at_89(int n) {
-  while (n != 1 && n != 89)
-    n = square_of_digits(n);
+  while (n != 1 && n != 89) n = square_of_digits(n);
   return n == 89;
 }
 
@@ -48,7 +47,8 @@ int main() {
 
   std::vector<std::future<int>> futures;
   for (int i = 1; i <= static_cast<int>(threads); ++i) {
-    futures.push_back(std::async(std::launch::async, count_arrives_at_89, i, threads, kLimit));
+    futures.push_back(std::async(std::launch::async, count_arrives_at_89, i,
+                                 threads, kLimit));
   }
 
   int answer = 0;

@@ -45,8 +45,7 @@ uint64_t Collatz::length(uint64_t n) const {
 
   if (use_cache) {
     uint64_t cached = cache_[n];
-    if (cached)
-      return cached;
+    if (cached) return cached;
   }
 
   uint64_t length_n = 1 + length(next(n));

@@ -11,7 +11,7 @@ bool IsTriangleNumber(uint32_t x) {
   // x = (n * (n + 1)) / 2 => n = (sqrt(8*x + 1) - 1) / 2, so x is a triangle
   // number if (sqrt(8*x + 1) - 1) / 2 is an integer.
   assert(x > 0);
-  double n = (sqrt(8.0*x + 1.0) - 1.0) / 2.0;
+  double n = (sqrt(8.0 * x + 1.0) - 1.0) / 2.0;
   double _;
   return modf(n, &_) == 0.0;
 }
@@ -65,8 +65,7 @@ bool TestIsTriangleNumber() {
     } else {
       assert(false);
     }
-    if (i == std::numeric_limits<uint32_t>::max())
-      return true;
+    if (i == std::numeric_limits<uint32_t>::max()) return true;
     i++;
   }
   assert(false);
@@ -107,8 +106,7 @@ size_t CountTriangleWords(const char* filename) {
     if ('A' <= c && c <= 'Z') {
       word += c;
     } else if (!word.empty()) {
-      if (IsTriangleWord(word))
-        count++;
+      if (IsTriangleWord(word)) count++;
       word.clear();
     }
   }

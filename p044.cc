@@ -13,8 +13,8 @@ bool IsPentagonal(T x) {
   // x = (n * (3*n - 1)) / 2 => n = (sqrt(24*x + 1) + 1) / 6, so x is a
   // pentagonal number if (sqrt(24*x + 1) + 1) / 6 is an integer.
   assert(x > 0);
-  assert(x <= 375299968947541); // (2^53 - 1) / 24
-  double n = (sqrt(24.0*x + 1.0) + 1.0) / 6.0;
+  assert(x <= 375299968947541);  // (2^53 - 1) / 24
+  double n = (sqrt(24.0 * x + 1.0) + 1.0) / 6.0;
   double _;
   return modf(n, &_) == 0.0;
 }
@@ -22,9 +22,9 @@ bool IsPentagonal(T x) {
 template <typename T>
 T MatchingPentagonalPairDifference() {
   // p(n) is the nth pentagonal number.
-  auto p = [] (T n) {
+  auto p = [](T n) {
     assert(n > 0);
-    return (n * (3*n - 1)) / 2;
+    return (n * (3 * n - 1)) / 2;
   };
 
   // The difference between p(k) and p(j) will be a pentagonal number, so find
@@ -43,8 +43,7 @@ T MatchingPentagonalPairDifference() {
 
       if (diff_k_j == diff) {
         const T sum_k_j = p(k) + p(j);
-        if (IsPentagonal(sum_k_j))
-          return diff;
+        if (IsPentagonal(sum_k_j)) return diff;
         j++;
         k++;
         continue;
@@ -57,8 +56,7 @@ T MatchingPentagonalPairDifference() {
 
       assert(diff_k_j > diff);
       j++;
-      if (j == k)
-        break;
+      if (j == k) break;
     }
   }
 

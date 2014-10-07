@@ -7,13 +7,10 @@
 
 template <typename Int>
 static bool isPrime(Int n) {
-  if (n < 2)
-    return false;
-  if (n % 2 == 0)
-    return false;
+  if (n < 2) return false;
+  if (n % 2 == 0) return false;
   for (Int divisor = 3; divisor * divisor <= n; divisor += 2) {
-    if (n % divisor == 0)
-      return false;
+    if (n % divisor == 0) return false;
   }
   return true;
 }
@@ -59,9 +56,7 @@ class Marked {
 template <typename Int>
 class PrimesEratosthenes {
  public:
-  PrimesEratosthenes() : current_(3) {
-    active_marked_.emplace(3);
-  }
+  PrimesEratosthenes() : current_(3) { active_marked_.emplace(3); }
 
   Int current() const { return current_; }
 
